@@ -41,7 +41,7 @@ def compare_edge_bc(G, M, weight=None, seed=None):
     for n in ebcG:
         u, v = n
         original = ebcG[n]
-        multi = sum(ebcM[(u, v, k)] for k in M[u][v])
+        multi = sum(ebcM[(u, v, k)] for k in M[u][v] if (u,v,k) in ebcM)
         if not (original - DELTA < multi and original + DELTA > multi):
             print("Original {} != {}".format(original, multi))
             exit(1)
