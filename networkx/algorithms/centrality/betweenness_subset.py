@@ -4,7 +4,7 @@ import warnings
 from networkx.algorithms.centrality.betweenness import (
     _single_source_dijkstra_path_basic as dijkstra,
     _single_source_shortest_path_basic as shortest_path,
-    _add_edge_keys
+    _add_edge_keys,
 )
 
 __all__ = [
@@ -194,7 +194,7 @@ def edge_betweenness_centrality_subset(
     b = _rescale_e(b, len(G), normalized=normalized, directed=G.is_directed())
     if G.is_multigraph():
         b = _add_edge_keys(G, b, weight=weight)
-        for e in G.edges(): # Remove edges without key
+        for e in G.edges():  # Remove edges without key
             if e in b:
                 del b[e]
     return b
