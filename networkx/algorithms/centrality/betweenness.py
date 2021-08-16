@@ -238,9 +238,6 @@ def edge_betweenness_centrality(G, k=None, normalized=True, weight=None, seed=No
     )
     if G.is_multigraph():
         betweenness = _add_edge_keys(G, betweenness, weight=weight)
-        for e in G.edges():  # Remove edges without key
-            if e in betweenness:
-                del betweenness[e]
     return betweenness
 
 
@@ -426,8 +423,8 @@ def _get_edge_keys(G, weight):
         This function returns a callable that accepts exactly three inputs:
         a node `u`, a node adjacent to the first one `v` and the edge attribute
         dictionary `d` for the edge joining those nodes. That function returns
-        a list with integers representing the keys of those edges matching
-        the lowest `weight` of edges between `u` and `v`.
+        a list with edge keys of those edges matching the lowest `weight` of
+        edges between `u` and `v`.
 
     If any edge does not have an attribute with key `weight`, it is assumed to
     have weight one.
@@ -466,8 +463,10 @@ def _add_edge_keys(G, betweenness, weight=None):
     betweenness.update(dict.fromkeys(G.edges(keys=True), 0.0))
 
     for u, v in G.edges():
-        keys = _keys(u, v, G[u][v])
-        for k in keys:
-            betweenness[(u, v, k)] = betweenness[(u, v)] / len(keys)
+        if (u, v) in betweenness:
+            keys = _keys(u, v, G[u][v])
+            for k in keys:
+                betweenness[(u, v, k)] = betweenness[(u, v)] / len(keys)
+            del betweenness[(u, v)]
 
     return betweenness
