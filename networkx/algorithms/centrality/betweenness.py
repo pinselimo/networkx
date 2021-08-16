@@ -463,12 +463,10 @@ def _add_edge_keys(G, betweenness, weight=None):
     betweenness.update(dict.fromkeys(G.edges(keys=True), 0.0))
 
     for u, v in G.edges():
-        keys = _keys(u, v, G[u][v])
-        for k in keys:
-            betweenness[(u, v, k)] = betweenness[(u, v)] / len(keys)
-
-    for e in G.edges():  # Remove edges without key
-        if e in betweenness:
-            del betweenness[e]
+        if (u, v) in betweenness:
+            keys = _keys(u, v, G[u][v])
+            for k in keys:
+                betweenness[(u, v, k)] = betweenness[(u, v)] / len(keys)
+            del betweenness[(u, v)]
 
     return betweenness
