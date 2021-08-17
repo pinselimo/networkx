@@ -56,7 +56,7 @@ if __name__ == "__main__":
                 print("\r{:2.2f} %".format(100 * i / n), end=" " * 4, flush=True)
                 i += 1
 
-                G = random_graph(seed=t, weights=(weight,))
+                G = random_graph(size=20, seed=t, weights=(weight,))
                 if directed:
                     G = G.to_directed()
                 M = make_multi(G, seed=t)
