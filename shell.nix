@@ -8,6 +8,7 @@
         scipy
         matplotlib
         pandas
+        ipython
 
         # test
         pytest
