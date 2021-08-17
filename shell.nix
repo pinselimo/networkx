@@ -14,6 +14,7 @@
         pytest-cov
         codecov
         black
+        memory_profiler
       ];
     in with pkgs; [
       (python39.withPackages env)
